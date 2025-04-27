@@ -101,7 +101,7 @@ router.get('/track/canadapost/:trackingNumber', async (req, res) => {
 })
 
 // Apply the router to the app
-app.use('', router)
+app.use('/.netlify/functions/api', router)
 
 // Export the serverless function handler
 module.exports.handler = serverless(app)
