@@ -36,6 +36,8 @@ router.get('/track/canadapost/:trackingNumber', async (req, res) => {
     
     // Load the HTML with cheerio
     const $ = cheerio.load(html)
+
+    console.log($)
     
     // Extract core tracking data
     const status = $('.ed_summary .edd-text-size').text().trim() || null
@@ -99,7 +101,7 @@ router.get('/track/canadapost/:trackingNumber', async (req, res) => {
 })
 
 // Apply the router to the app
-app.use('/.netlify/functions/api', router)
+app.use('', router)
 
 // Export the serverless function handler
 module.exports.handler = serverless(app)
