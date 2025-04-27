@@ -5,8 +5,6 @@ const cheerio = require('cheerio')
 const app = express()
 const router = express.Router()
 
-// Import helpers
-const { getLastFridayOrNonHolidayDate, dateToUnixTimestampPlusADay, dateToUnixTimestamp, formatDateToMatchApiArgument } = require('./helpers.js')
 
 // Add CORS middleware
 app.use((req, res, next) => {
