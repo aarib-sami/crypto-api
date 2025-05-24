@@ -3,7 +3,7 @@
 
 [[redirects]]
   from = "/api/*"
-  to = "/.netlify/functions/index/:splat"
+  to = "crypto/:splat"
   status = 200
 
 [functions]
