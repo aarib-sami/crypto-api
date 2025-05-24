@@ -1,26 +1,17 @@
 {
-  "name": "dividendapi",
+  "name": "crypto-api",
   "version": "1.0.0",
-  "description": "An API that return dividends for a certain symbol",
   "main": "index.js",
   "scripts": {
-    "build": "netlify deploy --prod",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon index.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alexstaniea/DividendAPI.git"
-  },
-  "author": "",
+  "author": "Aarib Sami",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/alexstaniea/DividendAPI/issues"
-  },
-  "homepage": "https://github.com/alexstaniea/DividendAPI#readme",
+  "description": "",
   "dependencies": {
-    "axios": "^1.4.0",
-    "cheerio": "^1.0.0-rc.12",
-    "express": "^4.18.2",
+    "axios": "^1.9.0",
+    "cheerio": "^1.0.0",
+    "express": "^5.1.0",
     "serverless-http": "^3.2.0"
   }
 }
