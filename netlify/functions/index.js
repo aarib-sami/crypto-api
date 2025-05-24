@@ -72,11 +72,11 @@ const handleErrorWithCacheFallback = (cacheKey, error, res, errorMessage) => {
   });
 };
 
-app.get('/', (req, res) => {
+router.get('/', (req, res) => {
     res.json('Welcome to the Crypto API.');
 });
 
-app.get("/trending-coins", async (req, res) => {
+router.get("/trending-coins", async (req, res) => {
   try {
     const result = await getCachedData('trending-coins', scrapeTrendingCoins);
 
@@ -98,7 +98,7 @@ app.get("/trending-coins", async (req, res) => {
   }
 });
 
-app.get("/trending-categories", async (req, res) => {
+router.get("/trending-categories", async (req, res) => {
   try {
     const result = await getCachedData('trending-categories', scrapeTrendingCategories);
 
@@ -120,7 +120,7 @@ app.get("/trending-categories", async (req, res) => {
   }
 });
 
-app.get("/top-gainers", async (req, res) => {
+router.get("/top-gainers", async (req, res) => {
     try {
         const result = await getCachedData('top-gainers', scrapeTopGainers);
     
@@ -142,7 +142,7 @@ app.get("/top-gainers", async (req, res) => {
     }
 });
 
-app.get("/top-losers", async (req, res) => {
+router.get("/top-losers", async (req, res) => {
     try {
         const result = await getCachedData('top-losers', scrapeTopLosers);
     
@@ -164,7 +164,7 @@ app.get("/top-losers", async (req, res) => {
     }
 });
 
-app.get("/all-time-highs", async (req, res) => {
+router.get("/all-time-highs", async (req, res) => {
     try {
         const result = await getCachedData('all-time-highs', allTimeHighs);
     
@@ -186,7 +186,7 @@ app.get("/all-time-highs", async (req, res) => {
     }
 });
 
-app.get("/btc-dominance", async (req, res) => {
+router.get("/btc-dominance", async (req, res) => {
     try {
         const result = await getCachedData('btc-dominance', scrapeBTCDominance);
     
@@ -206,7 +206,7 @@ app.get("/btc-dominance", async (req, res) => {
 });
 
 // Bonus: Cache status endpoint (useful for monitoring)
-app.get("/cache-status", (req, res) => {
+router.get("/cache-status", (req, res) => {
   const cacheInfo = [];
   
   for (const [key, value] of cache.entries()) {
@@ -231,7 +231,7 @@ app.get("/cache-status", (req, res) => {
 });
 
 // Bonus: Clear cache endpoint (useful for testing)
-app.delete("/cache", (req, res) => {
+router.delete("/cache", (req, res) => {
   const clearedCount = cache.size;
   cache.clear();
   
