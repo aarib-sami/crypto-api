@@ -72,7 +72,7 @@ const handleErrorWithCacheFallback = (cacheKey, error, res, errorMessage) => {
   });
 };
 
-app.get('/crypto', (req, res) => {
+app.get('/', (req, res) => {
     res.json('Welcome to the Crypto API.');
 });
 
