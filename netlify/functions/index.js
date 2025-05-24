@@ -262,6 +262,6 @@ const cleanupCache = () => {
 // Set up cache cleanup interval
 setInterval(cleanupCache, 10 * 60 * 1000); // Every 10 minutes
 
-app.use('/.netlify/functions/crypto', router); // path must route to lambda
+app.use('/.netlify/functions/index', router); // path must route to lambda
 
 module.exports.handler = serverlress(app);
