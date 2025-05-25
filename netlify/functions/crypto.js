@@ -32,7 +32,6 @@ const getCachedData = async (cacheKey, scraperFunction, ...args) => {
   
   const responseData = {
     status: 'success',
-    timestamp: new Date().toISOString(),
     data: freshData
   };
 
