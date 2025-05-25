@@ -77,8 +77,6 @@ const scrapeTrendingCoins = async () => {
       change24h: changePercentage,
       change24hFormatted: formatted24hChange,
       trending: true,
-      url: coinUrl,
-      imageUrl: imageUrl
     });
   });
   
@@ -144,8 +142,6 @@ const scrapeTrendingCategories = async () => {
       marketCapFormatted,
       change24h: changePercentage,
       change24hFormatted: `${isPositive ? '+' : ''}${changePercentage.toFixed(2)}%`,
-      url: fullUrl,
-      imageUrl: imageUrl
     });
   });
   
@@ -221,8 +217,6 @@ const scrapeTopGainers = async () => {
             marketCapFormatted: marketCapText,
             change24h: changePercentage,
             change24hFormatted: changePercentageText,
-            url,
-            imageUrl,
         });
 
         if (gainerNum >= 10) {
@@ -301,8 +295,6 @@ const scrapeTopLosers = async () => {
             marketCapFormatted: marketCapText,
             change24h: changePercentage,
             change24hFormatted: changePercentageText,
-            url,
-            imageUrl,
         });
 
         if (loserNum >= 10) {
@@ -383,8 +375,6 @@ const allTimeHighs = async () => {
             allTimeHighFormatted,
             change24h: changePercentage,
             change24hFormatted: changePercentageText,
-            url,
-            imageUrl,
         });
 
         if (highNum >= 10) {
