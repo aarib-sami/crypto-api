@@ -1,7 +1,7 @@
 // app.js - Main application file
 const PORT = 8000;
 const express = require('express');
-const serverlress = require('serverless-http');
+const serverless = require('serverless-http'); // Fixed typo
 const axios = require('axios');
 const cheerio = require('cheerio');
 const app = express();
@@ -72,11 +72,23 @@ const handleErrorWithCacheFallback = (cacheKey, error, res, errorMessage) => {
   });
 };
 
-router.get('/', (req, res) => {
-    res.json('Welcome to the Crypto API.');
+router.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, X-RapidAPI-Key, X-RapidAPI-Host');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  if (req.method === 'OPTIONS') {
+    res.sendStatus(200);
+  } else {
+    next();
+  }
 });
 
-router.get("/trending-coins", async (req, res) => {
+// V1 API Routes
+router.get('/v1/', (req, res) => {
+    res.json('Welcome to the Crypto API v1.');
+});
+
+router.get("/v1/trending-coins", async (req, res) => {
   try {
     const result = await getCachedData('trending-coins', scrapeTrendingCoins);
 
@@ -98,7 +110,7 @@ router.get("/trending-coins", async (req, res) => {
   }
 });
 
-router.get("/trending-categories", async (req, res) => {
+router.get("/v1/trending-categories", async (req, res) => {
   try {
     const result = await getCachedData('trending-categories', scrapeTrendingCategories);
 
@@ -120,7 +132,7 @@ router.get("/trending-categories", async (req, res) => {
   }
 });
 
-router.get("/top-gainers", async (req, res) => {
+router.get("/v1/top-gainers", async (req, res) => {
     try {
         const result = await getCachedData('top-gainers', scrapeTopGainers);
     
@@ -142,7 +154,7 @@ router.get("/top-gainers", async (req, res) => {
     }
 });
 
-router.get("/top-losers", async (req, res) => {
+router.get("/v1/top-losers", async (req, res) => {
     try {
         const result = await getCachedData('top-losers', scrapeTopLosers);
     
@@ -164,7 +176,7 @@ router.get("/top-losers", async (req, res) => {
     }
 });
 
-router.get("/all-time-highs", async (req, res) => {
+router.get("/v1/all-time-highs", async (req, res) => {
     try {
         const result = await getCachedData('all-time-highs', allTimeHighs);
     
@@ -186,7 +198,7 @@ router.get("/all-time-highs", async (req, res) => {
     }
 });
 
-router.get("/btc-dominance", async (req, res) => {
+router.get("/v1/btc-dominance", async (req, res) => {
     try {
         const result = await getCachedData('btc-dominance', scrapeBTCDominance);
     
@@ -203,43 +215,6 @@ router.get("/btc-dominance", async (req, res) => {
     } catch (error) {
         handleErrorWithCacheFallback('btc-dominance', error, res, "Error fetching BTC dominance data");
     }
-});
-
-// Bonus: Cache status endpoint (useful for monitoring)
-router.get("/cache-status", (req, res) => {
-  const cacheInfo = [];
-  
-  for (const [key, value] of cache.entries()) {
-    const age = Math.floor((Date.now() - value.timestamp) / 1000);
-    const remainingTime = Math.max(0, Math.floor(CACHE_DURATION / 1000) - age);
-    
-    cacheInfo.push({
-      key,
-      ageSeconds: age,
-      remainingSeconds: remainingTime,
-      expired: age > (CACHE_DURATION / 1000)
-    });
-  }
-  
-  res.json({
-    status: 'success',
-    timestamp: new Date().toISOString(),
-    cacheDurationSeconds: CACHE_DURATION / 1000,
-    totalCacheEntries: cache.size,
-    cacheEntries: cacheInfo
-  });
-});
-
-// Bonus: Clear cache endpoint (useful for testing)
-router.delete("/cache", (req, res) => {
-  const clearedCount = cache.size;
-  cache.clear();
-  
-  res.json({
-    status: 'success',
-    message: `Cleared ${clearedCount} cache entries`,
-    timestamp: new Date().toISOString()
-  });
 });
 
 // Cache cleanup function - runs every 10 minutes
@@ -264,4 +239,4 @@ setInterval(cleanupCache, 10 * 60 * 1000); // Every 10 minutes
 
 app.use('/.netlify/functions/crypto', router); // path must route to lambda
 
-module.exports.handler = serverlress(app);
+module.exports.handler = serverless(app);
